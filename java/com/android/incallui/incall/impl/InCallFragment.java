@@ -41,6 +41,19 @@ import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.animation.ValueAnimator;
+import com.android.incallui.call.state.DialerCallState;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.util.Log;
+import android.view.animation.DecelerateInterpolator;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -78,6 +91,8 @@ import com.android.incallui.incall.protocol.SecondaryInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.view.WindowManager;
+import com.android.incallui.incall.protocol.ContactPhotoType;
 
 /** Fragment that shows UI for an ongoing voice call. */
 public class InCallFragment extends Fragment
@@ -158,6 +173,9 @@ public class InCallFragment extends Fragment
     }
   }
 
+    Timer timer = new Timer();
+    TimerTask timerTask;
+
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -170,6 +188,7 @@ public class InCallFragment extends Fragment
   }
 
   private View view;
+  private ImageView avatarImageView;
 
   @Nullable
   @Override
@@ -180,12 +199,22 @@ public class InCallFragment extends Fragment
       @Nullable Bundle bundle) {
     LogUtil.i("InCallFragment.onCreateView", null);
     getActivity().setTheme(R.style.Theme_InCallScreen);
+        Window window = getActivity().getWindow();
+	window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        window.setStatusBarColor(Color.TRANSPARENT);
+        window.setNavigationBarColor(Color.TRANSPARENT);
+        window.setNavigationBarContrastEnforced(false);
+        window.setDecorFitsSystemWindows(false);
+        window.getDecorView().setSystemUiVisibility(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
     // Bypass to avoid StrictModeResourceMismatchViolation
     final View view = layoutInflater.inflate(R.layout.frag_incall_voice, viewGroup, false);
+    this.view  = view;
+    avatarImageView = (ImageView) view.findViewById(R.id.contactgrid_avatar);
     contactGridManager =
         new ContactGridManager(
             view,
-            (ImageView) view.findViewById(R.id.contactgrid_avatar),
+            avatarImageView,
             getResources().getDimensionPixelSize(R.dimen.incall_avatar_size),
             true /* showAnonymousAvatar */);
     contactGridManager.onMultiWindowModeChanged(getActivity().isInMultiWindowMode());
@@ -230,6 +259,7 @@ public class InCallFragment extends Fragment
           @Override
           public void onViewDetachedFromWindow(View v) {}
         });
+    view.setFitsSystemWindows(false);
     return view;
   }
 

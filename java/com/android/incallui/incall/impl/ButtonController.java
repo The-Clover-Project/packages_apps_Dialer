@@ -303,7 +303,7 @@ interface ButtonController {
           R.string.incall_content_description_muted,
           R.string.incall_content_description_unmuted,
           R.string.incall_label_mute,
-          R.drawable.quantum_ic_mic_off_vd_theme_24);
+          R.drawable.op_ic_toolbar_mute_normal);
     }
 
     @Override
@@ -493,7 +493,7 @@ interface ButtonController {
         button.setVisibility(isAllowed ? View.VISIBLE : View.INVISIBLE);
         button.setChecked(isChecked);
         button.setOnClickListener(this);
-        button.setIconDrawable(R.drawable.quantum_ic_record_white_36);
+        button.setIconDrawable(R.drawable.op_ic_toolbar_record_normal);
         button.setContentDescription(res.getText(
             isChecked ? R.string.onscreenStopCallRecordText : R.string.onscreenCallRecordText));
         button.setShouldShowMoreIndicator(false);
@@ -525,7 +525,7 @@ interface ButtonController {
           0,
           0,
           R.string.incall_label_dialpad,
-          R.drawable.quantum_ic_dialpad_vd_theme_24);
+          R.drawable.op_ic_toolbar_dialpad_normal);
     }
 
     @Override
@@ -543,7 +543,7 @@ interface ButtonController {
           R.string.incall_content_description_unhold,
           R.string.incall_content_description_hold,
           R.string.incall_label_hold,
-          R.drawable.quantum_ic_pause_vd_theme_24);
+          R.drawable.op_ic_pause);
     }
 
     @Override
@@ -560,7 +560,7 @@ interface ButtonController {
           InCallButtonIds.BUTTON_ADD_CALL,
           0,
           R.string.incall_label_add_call,
-          R.drawable.ic_addcall_white);
+          R.drawable.op_ic_toolbar_addcall_normal);
       Assert.isNotNull(delegate);
     }
 
@@ -578,7 +578,7 @@ interface ButtonController {
           InCallButtonIds.BUTTON_SWAP,
           R.string.incall_content_description_swap_calls,
           R.string.incall_label_swap,
-          R.drawable.quantum_ic_swap_calls_vd_theme_24);
+          R.drawable.op_ic_toolbar_swap_normal);
       Assert.isNotNull(delegate);
     }
 
@@ -596,7 +596,7 @@ interface ButtonController {
           InCallButtonIds.BUTTON_MERGE,
           R.string.incall_content_description_merge_calls,
           R.string.incall_label_merge,
-          R.drawable.quantum_ic_call_merge_vd_theme_24);
+          R.drawable.op_ic_toolbar_merge_normal);
       Assert.isNotNull(delegate);
     }
 
@@ -614,7 +614,7 @@ interface ButtonController {
           InCallButtonIds.BUTTON_UPGRADE_TO_VIDEO,
           0,
           R.string.incall_label_videocall,
-          R.drawable.quantum_ic_videocam_vd_theme_24);
+          R.drawable.op_ic_videocam);
       Assert.isNotNull(delegate);
     }
 
@@ -673,7 +673,7 @@ interface ButtonController {
           InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY,
           R.string.incall_content_description_swap_calls,
           R.string.incall_label_swap,
-          R.drawable.quantum_ic_swap_calls_vd_theme_24);
+          R.drawable.op_ic_toolbar_swap_normal);
       Assert.isNotNull(inCallScreenDelegate);
       this.inCallScreenDelegate = inCallScreenDelegate;
     }
@@ -692,7 +692,7 @@ interface ButtonController {
           InCallButtonIds.BUTTON_SWAP_SIM,
           R.string.incall_content_description_swap_sim,
           R.string.incall_label_swap_sim,
-          R.drawable.ic_sim_change_white);
+          R.drawable.op_ic_sim_change_white);
     }
 
     @Override

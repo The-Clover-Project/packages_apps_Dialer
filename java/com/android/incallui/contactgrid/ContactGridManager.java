@@ -19,7 +19,18 @@ package com.android.incallui.contactgrid;
 
 import android.content.Context;
 import android.graphics.drawable.Animatable;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import com.android.incallui.call.state.DialerCallState;
+import java.util.Timer;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.os.SystemClock;
 import android.telephony.PhoneNumberUtils;
 import android.text.BidiFormatter;
@@ -47,12 +58,14 @@ import com.android.incallui.incall.protocol.PrimaryCallState;
 import com.android.incallui.incall.protocol.PrimaryInfo;
 
 import java.util.List;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 
 /** Utility to manage the Contact grid */
 public class ContactGridManager {
 
   private final Context context;
   private final View contactGridLayout;
+  private Timer timer;
 
   // Row 0: Captain Holt        ON HOLD
   // Row 0: Calling...
@@ -96,6 +109,7 @@ public class ContactGridManager {
   private PrimaryInfo primaryInfo = PrimaryInfo.empty();
   private PrimaryCallState primaryCallState = PrimaryCallState.empty();
   private boolean isInMultiWindowMode;
+  View view;
 
   public ContactGridManager(View view, @Nullable ImageView avatarImageView, int avatarSize,
                             boolean showAnonymousAvatar) {
@@ -290,6 +304,16 @@ public class ContactGridManager {
               ? PhoneNumberUtils.createTtsSpannable(primaryInfo.name())
               : primaryInfo.name());
 
+	if (!primaryInfo.nameIsNumber()){
+	String name = primaryInfo.name();
+	String[] names = name.split(" ", 2);
+        String firstName = names[0];
+        String restName  = "";
+	if (names.length > 1)
+            restName = "\n"+names[1];
+	contactNameTextView.setText(firstName+restName);
+	}
+
       // Set direction of the name field
       int nameDirection = View.TEXT_DIRECTION_INHERIT;
       if (primaryInfo.nameIsNumber()) {
@@ -396,6 +420,7 @@ public class ContactGridManager {
       bottomTextSwitcher.setVisibility(View.VISIBLE);
     }
 
+    setAvatarAlphaToMax(info.isTimerVisible);
     if (info.isTimerVisible) {
       bottomTextSwitcher.setDisplayedChild(1);
       bottomTimerView.setBase(
@@ -415,6 +440,12 @@ public class ContactGridManager {
       bottomTimerView.stop();
       isTimerStarted = false;
     }
+  }
+
+  public void setAvatarAlphaToMax(boolean transMax){
+      if (avatarImageView!=null){
+          avatarImageView.animate().alpha(transMax? 1f : .85f).setInterpolator(new LinearOutSlowInInterpolator()).setDuration(1500).start();
+      }
   }
 
   private void updateDeviceNumberRow() {
