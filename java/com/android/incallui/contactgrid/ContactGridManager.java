@@ -58,7 +58,7 @@ import com.android.incallui.incall.protocol.PrimaryCallState;
 import com.android.incallui.incall.protocol.PrimaryInfo;
 
 import java.util.List;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 /** Utility to manage the Contact grid */
 public class ContactGridManager {

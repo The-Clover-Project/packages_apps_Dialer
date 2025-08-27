@@ -50,7 +50,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.animation.ValueAnimator;
 import com.android.incallui.call.state.DialerCallState;
-import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 import android.util.Log;
 import android.view.animation.DecelerateInterpolator;
 
